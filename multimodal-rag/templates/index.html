@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimodal RAG Chat</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="header-inner">
+                <h1>Multimodal RAG</h1>
+                <span class="model-tag">Gemini 2.5 Flash</span>
+            </div>
+        </header>
+
+        <main id="messages"></main>
+
+        <footer>
+            <div id="sources"></div>
+            <div class="input-row">
+                <input
+                    type="text"
+                    id="messageInput"
+                    placeholder="Ask anything about your content..."
+                    autocomplete="off"
+                />
+                <button id="sendBtn">Send</button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
