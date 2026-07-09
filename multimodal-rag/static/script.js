@@ -74,9 +74,17 @@ function renderSources(refs) {
     sourcesEl.innerHTML = `<span class="sources-label">Sources</span>`;
     for (const ref of refs) {
         const score = `${(ref.score * 100).toFixed(0)}%`;
+        const mediaUrl = `/media/${encodeURIComponent(ref.source)}`;
+        let preview = "";
+        if (ref.type === "image") {
+            preview = `<a href="${mediaUrl}" target="_blank"><img class="source-thumb" src="${mediaUrl}" alt="${escapeHtml(ref.source)}" onerror="this.parentElement.style.display='none'"></a>`;
+        } else if (ref.type === "video") {
+            preview = `<video class="source-thumb" src="${mediaUrl}" controls muted preload="metadata" onerror="this.style.display='none'"></video>`;
+        }
         sourcesEl.innerHTML += `
             <div class="source-item">
                 <span class="badge ${ref.type}">${ref.type}</span>
+                ${preview}
                 <span>${escapeHtml(ref.source)}</span>
                 <span>${score}</span>
             </div>`;

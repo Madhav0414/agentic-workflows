@@ -1,8 +1,11 @@
-﻿from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from embeddings import text_embed
 from pinecone_db import PineconeDB
 from config import get_genai_client
 import logging
+import os
+
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -14,6 +17,10 @@ db = PineconeDB()
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/media/<path:filename>")
+def media(filename):
+    return send_from_directory(DATA_DIR, filename)
 
 @app.route("/api/chat", methods=["POST"])
 def chat():
@@ -38,7 +45,7 @@ def chat():
         for result in results:
             metadata = result["metadata"]
             content_type = metadata.get("content_type", "unknown")
-            source = metadata.get("source", "unknown").split("/")[-1]
+            source = metadata.get("source", "unknown").replace("\\", "/").split("/")[-1]
             score = result["score"]
 
             if content_type == "text":

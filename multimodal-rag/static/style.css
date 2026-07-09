@@ -222,3 +222,14 @@ footer {
     opacity: 0.45;
     cursor: not-allowed;
 }
+
+/* --- media previews in sources panel --- */
+.source-item { align-items: center; }
+.source-thumb {
+  max-height: 72px;
+  max-width: 120px;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+}
+video.source-thumb { max-width: 170px; }
