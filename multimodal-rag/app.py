@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+﻿from flask import Flask, render_template, request, jsonify
 from embeddings import text_embed
 from pinecone_db import PineconeDB
 from config import get_genai_client
@@ -89,7 +89,7 @@ Answer:"""
         response = genai_client.models.generate_content(
             model="gemini-2.5-flash",
             contents=full_prompt,
-            config={"max_output_tokens": 512}
+            config={"max_output_tokens": 2048}
         )
 
         answer = response.text
