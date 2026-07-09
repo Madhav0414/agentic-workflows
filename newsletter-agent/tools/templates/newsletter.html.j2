@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{ meta.newsletter_name }} — {{ meta.topic }}</title>
+  <style type="text/css">
+    /* Mobile overrides — all other styles must be inline for email client compatibility */
+    @media only screen and (max-width: 620px) {
+      .email-container { width: 100% !important; }
+      .section-pad { padding: 20px 16px !important; }
+      .stat-cell { display: block !important; width: 100% !important; padding: 12px 0 !important; }
+      .resource-card { margin-bottom: 12px !important; }
+      h1 { font-size: 22px !important; }
+      h2 { font-size: 18px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#F3F4F6; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;">
+
+  <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+
+  <!-- Preheader: hidden preview text shown in email clients under subject line -->
+  <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;color:#F3F4F6;line-height:1px;">
+    {{ meta.preview_text }}&nbsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;&hairsp;&zwnj;
+  </div>
+
+  <!-- Outer wrapper -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+         style="background-color:#F3F4F6; min-width:100%;">
+    <tr>
+      <td align="center" style="padding:24px 12px;">
+
+        <!-- Email container: max 600px -->
+        <table role="presentation" class="email-container" width="600" cellpadding="0" cellspacing="0" border="0"
+               style="max-width:600px; width:100%; background-color:#FFFFFF; border-radius:8px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+
+
+          <!-- ═══════════════════════════════════════════ -->
+          <!--  HEADER                                     -->
+          <!-- ═══════════════════════════════════════════ -->
+          <tr>
+            <td style="background-color:#0F0C29; padding:32px 40px 28px; text-align:center; background-image:linear-gradient(135deg, #0F0C29 0%, #1E1B4B 60%, #24243e 100%);">
+              {% if meta.logo_base64 %}
+              <img src="data:image/png;base64,{{ meta.logo_base64 }}"
+                   alt="{{ meta.newsletter_name }} logo"
+                   width="140" height="auto"
+                   style="display:block; margin:0 auto 14px; max-width:140px; height:auto; border:0;"
+                   border="0">
+              {% endif %}
+              <p style="margin:0 0 6px; font-size:11px; letter-spacing:3px; color:#A5B4FC; text-transform:uppercase; font-weight:600;">
+                Issue #{{ meta.issue_number }} &nbsp;·&nbsp; {{ meta.date }}
+              </p>
+              <h1 style="margin:0 0 10px; font-size:28px; font-weight:800; color:#FFFFFF; letter-spacing:-0.5px; line-height:1.2;">
+                {{ meta.newsletter_name }}
+              </h1>
+              <div style="width:40px; height:2px; background-color:#818CF8; margin:10px auto 12px;"></div>
+              <p style="margin:0; font-size:15px; color:#C7D2FE; font-weight:400; line-height:1.5;">
+                {{ meta.topic }}
+              </p>
+            </td>
+          </tr>
+
+
+          <!-- ═══════════════════════════════════════════ -->
+          <!--  SECTIONS LOOP                              -->
+          <!-- ═══════════════════════════════════════════ -->
+          {% for section in sections %}
+
+            {% if section.id == "big_idea" %}
+            <!-- BIG IDEA -->
+            <tr>
+              <td class="section-pad" style="padding:32px 40px 24px;">
+                <p style="margin:0 0 6px; font-size:10px; letter-spacing:2.5px; font-weight:700; color:{{ section.accent_color }}; text-transform:uppercase;">
+                  {{ section.label }}
+                </p>
+                <h2 style="margin:0 0 16px; font-size:20px; font-weight:700; color:#111827; line-height:1.35;">
+                  {{ section.headline }}
+                </h2>
+                <div style="font-size:15px; line-height:1.75; color:#374151;">
+                  {{ section.body_html | safe }}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:0 40px;">
+                <hr style="border:none; border-top:1px solid #E5E7EB; margin:0;">
+              </td>
+            </tr>
+
+
+            {% elif section.id == "key_stats" %}
+            <!-- KEY STATS -->
+            <tr>
+              <td class="section-pad" style="padding:28px 40px; background-color:#F9FAFB;">
+                <p style="margin:0 0 20px; font-size:10px; letter-spacing:2.5px; font-weight:700; color:#6B7280; text-transform:uppercase; text-align:center;">
+                  {{ section.label }}
+                </p>
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    {% for stat in section.stats %}
+                    <td class="stat-cell" style="text-align:center; padding:8px 12px; vertical-align:top; {% if not loop.last %}border-right:1px solid #E5E7EB;{% endif %}">
+                      <p style="margin:0 0 4px; font-size:34px; font-weight:800; color:#1E1B4B; line-height:1; letter-spacing:-1px;">
+                        {{ stat.value }}
+                      </p>
+                      <p style="margin:0; font-size:12px; color:#6B7280; line-height:1.4; max-width:120px; margin-left:auto; margin-right:auto;">
+                        {{ stat.label }}
+                      </p>
+                    </td>
+                    {% endfor %}
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:0 40px;">
+                <hr style="border:none; border-top:1px solid #E5E7EB; margin:0;">
+              </td>
+            </tr>
+
+
+            {% elif section.id == "deep_dive" %}
+            <!-- DEEP DIVE -->
+            <tr>
+              <td class="section-pad" style="padding:28px 40px 24px;">
+                <p style="margin:0 0 6px; font-size:10px; letter-spacing:2.5px; font-weight:700; color:#7C3AED; text-transform:uppercase;">
+                  {{ section.label }}
+                </p>
+                <h2 style="margin:0 0 16px; font-size:19px; font-weight:700; color:#111827; line-height:1.35;">
+                  {{ section.headline }}
+                </h2>
+                <div style="font-size:15px; line-height:1.75; color:#374151;">
+                  {{ section.body_html | safe }}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:0 40px;">
+                <hr style="border:none; border-top:1px solid #E5E7EB; margin:0;">
+              </td>
+            </tr>
+
+
+            {% elif section.id == "infographics" %}
+            <!-- INFOGRAPHICS -->
+            {% for infographic in section['items'] %}
+            <tr>
+              <td class="section-pad" style="padding:28px 40px; background-color:#FAFAFA; text-align:center;">
+                {% if loop.first %}
+                <p style="margin:0 0 6px; font-size:10px; letter-spacing:2.5px; font-weight:700; color:#6B7280; text-transform:uppercase;">
+                  {{ section.label }}
+                </p>
+                {% endif %}
+                <p style="margin:0 0 14px; font-size:14px; font-weight:600; color:#1F2937;">
+                  {{ infographic.title }}
+                </p>
+                <!-- SVG inline — viewBox should be "0 0 520 280" -->
+                <div style="max-width:520px; margin:0 auto; overflow:hidden;">
+                  {{ infographic.svg_code | safe }}
+                </div>
+                {% if infographic.caption %}
+                <p style="margin:10px 0 0; font-size:11px; color:#9CA3AF; font-style:italic;">
+                  {{ infographic.caption }}
+                </p>
+                {% endif %}
+              </td>
+            </tr>
+            {% if not loop.last %}
+            <tr>
+              <td style="padding:0 40px;">
+                <hr style="border:none; border-top:1px solid #E5E7EB; margin:0;">
+              </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+            <tr>
+              <td style="padding:0 40px;">
+                <hr style="border:none; border-top:1px solid #E5E7EB; margin:0;">
+              </td>
+            </tr>
+
+
+            {% elif section.id == "what_to_watch" %}
+            <!-- WHAT TO WATCH -->
+            <tr>
+              <td class="section-pad" style="padding:28px 40px 24px;">
+                <p style="margin:0 0 16px; font-size:10px; letter-spacing:2.5px; font-weight:700; color:#D97706; text-transform:uppercase;">
+                  {{ section.label }}
+                </p>
+                {% for item in section['items'] %}
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                       style="margin-bottom:{{ '4px' if loop.last else '12px' }};">
+                  <tr>
+                    <td width="20" style="vertical-align:top; padding-top:5px;">
+                      <div style="width:7px; height:7px; background-color:#F59E0B; border-radius:50%;"></div>
+                    </td>
+                    <td style="font-size:14px; line-height:1.65; color:#374151; padding-left:4px;">
+                      {{ item.text }}
+                    </td>
+                  </tr>
+                </table>
+                {% endfor %}
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:0 40px;">
+                <hr style="border:none; border-top:1px solid #E5E7EB; margin:0;">
+              </td>
+            </tr>
+
+
+            {% elif section.id == "tools_resources" %}
+            <!-- TOOLS & RESOURCES -->
+            <tr>
+              <td class="section-pad" style="padding:28px 40px 32px;">
+                <p style="margin:0 0 16px; font-size:10px; letter-spacing:2.5px; font-weight:700; color:#059669; text-transform:uppercase;">
+                  {{ section.label }}
+                </p>
+                {% for resource in section['items'] %}
+                <table role="presentation" class="resource-card" width="100%" cellpadding="0" cellspacing="0" border="0"
+                       style="margin-bottom:{% if loop.last %}0{% else %}12px{% endif %}; border:1px solid #E5E7EB; border-radius:6px; border-left:3px solid #059669;">
+                  <tr>
+                    <td style="padding:14px 16px;">
+                      <a href="{{ resource.url }}"
+                         style="display:inline-block; font-size:14px; font-weight:600; color:#1E1B4B; text-decoration:none; margin-bottom:4px;">
+                        {{ resource.name }} &#8594;
+                      </a>
+                      <p style="margin:0; font-size:13px; color:#6B7280; line-height:1.5;">
+                        {{ resource.description }}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+                {% endfor %}
+              </td>
+            </tr>
+
+            {% endif %}
+          {% endfor %}
+
+
+          <!-- ═══════════════════════════════════════════ -->
+          <!--  FOOTER                                     -->
+          <!-- ═══════════════════════════════════════════ -->
+          <tr>
+            <td style="background-color:#0F0C29; padding:28px 40px; text-align:center;">
+              {% if meta.logo_base64 %}
+              <img src="data:image/png;base64,{{ meta.logo_base64 }}"
+                   alt="{{ meta.newsletter_name }}"
+                   width="80" height="auto"
+                   style="display:block; margin:0 auto 12px; max-width:80px; height:auto; opacity:0.7; border:0;"
+                   border="0">
+              {% endif %}
+              <p style="margin:0 0 6px; font-size:12px; font-weight:700; color:#A5B4FC; letter-spacing:1px; text-transform:uppercase;">
+                {{ meta.newsletter_name }}
+              </p>
+              <p style="margin:0 0 12px; font-size:11px; color:#6B7280; line-height:1.6;">
+                You're receiving this because you subscribed to {{ meta.newsletter_name }}.<br>
+                {{ footer.physical_address }}
+              </p>
+              <p style="margin:0 0 14px; font-size:12px;">
+                <a href="{{ footer.unsubscribe_url }}"
+                   style="color:#6B7280; text-decoration:underline;">
+                  Unsubscribe
+                </a>
+                &nbsp;&nbsp;·&nbsp;&nbsp;
+                <a href="{{ footer.unsubscribe_url }}"
+                   style="color:#6B7280; text-decoration:underline;">
+                  Manage Preferences
+                </a>
+              </p>
+              <p style="margin:0; font-size:10px; color:#374151;">
+                &copy; {{ footer.copyright_year }} {{ meta.newsletter_name }}. All rights reserved.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- end email container -->
+
+      </td>
+    </tr>
+  </table>
+  <!-- end outer wrapper -->
+
+</body>
+</html>
